@@ -3,7 +3,7 @@ import "./Rightbar.css";
 import { Users } from "../../dummyData";
 import Online from "../online/Online";
 
-function Rightbar({ profile }) {
+function Rightbar({ user }) {
   const HomeRightbar = () => {
     return (
       <>
@@ -45,6 +45,8 @@ function Rightbar({ profile }) {
   };
 
   const ProfileRightbar = () => {
+    const PUBLIC_FOLDER = process.env.REACT_APP_PUBLIC_FOLDER;
+
     return (
       <>
         <h4 className="rightbarTitle">ユーザー情報</h4>
@@ -57,7 +59,7 @@ function Rightbar({ profile }) {
           <div className="rightbarFollowings">
             <div className="rightbarFollowing">
               <img
-                src="assets/person/1.jpeg"
+                src={PUBLIC_FOLDER + "/person/1.jpeg"}
                 alt=""
                 className="rightbarFollowingImg"
               />
@@ -65,7 +67,7 @@ function Rightbar({ profile }) {
             </div>
             <div className="rightbarFollowing">
               <img
-                src="assets/person/2.jpeg"
+                src={PUBLIC_FOLDER + "/person/2.jpeg"}
                 alt=""
                 className="rightbarFollowingImg"
               />
@@ -73,7 +75,7 @@ function Rightbar({ profile }) {
             </div>
             <div className="rightbarFollowing">
               <img
-                src="assets/person/3.jpeg"
+                src={PUBLIC_FOLDER + "/person/3.jpeg"}
                 alt=""
                 className="rightbarFollowingImg"
               />
@@ -81,7 +83,7 @@ function Rightbar({ profile }) {
             </div>
             <div className="rightbarFollowing">
               <img
-                src="assets/person/4.jpeg"
+                src={PUBLIC_FOLDER + "/person/4.jpeg"}
                 alt=""
                 className="rightbarFollowingImg"
               />
@@ -89,7 +91,7 @@ function Rightbar({ profile }) {
             </div>
             <div className="rightbarFollowing">
               <img
-                src="assets/person/5.jpeg"
+                src={PUBLIC_FOLDER + "/person/5.jpeg"}
                 alt=""
                 className="rightbarFollowingImg"
               />
@@ -103,7 +105,7 @@ function Rightbar({ profile }) {
   return (
     <div className="rightbar">
       <div className="rightbarWrapper">
-        {profile ? <ProfileRightbar /> : <HomeRightbar />}
+        {user ? <ProfileRightbar /> : <HomeRightbar />}
       </div>
     </div>
   );
