@@ -1,10 +1,10 @@
 import { MoreVert } from "@mui/icons-material";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./Post.css";
 import axios from "axios";
-// import { Users } from "../../dummyData";
 import { format } from "timeago.js";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../state/AuthContext";
 
 function Post({ post }) {
   const PUBLIC_FOLDER = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -12,6 +12,8 @@ function Post({ post }) {
   const [like, setLike] = useState(post.likes.length);
   const [isLiked, setIsLiked] = useState(false);
   const [user, setUser] = useState({});
+
+  const { user: currentUser } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -21,7 +23,13 @@ function Post({ post }) {
     fetchUser();
   }, [post.userId]);
 
-  const handleLike = () => {
+  const handleLike = async () => {
+    try {
+      // いいねのAPIを叩いていく
+      await axios.put(`/posts/${post._id}/like`, { userId: currentUser._id });
+    } catch (err) {
+      console.log(err);
+    }
     setLike(isLiked ? like - 1 : like + 1);
     setIsLiked(!isLiked);
   };
@@ -34,7 +42,9 @@ function Post({ post }) {
             <Link to={`/profile/${user.username}`}>
               <img
                 src={
-                  user.profilePicture || PUBLIC_FOLDER + "/person/noAvatar.png"
+                  user.profilePicture
+                    ? PUBLIC_FOLDER + user.profilePicture
+                    : PUBLIC_FOLDER + "/person/noAvatar.png"
                 }
                 alt=""
                 className="postProfileImg"
